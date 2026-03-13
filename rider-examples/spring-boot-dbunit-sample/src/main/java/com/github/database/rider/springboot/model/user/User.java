@@ -1,7 +1,7 @@
 package com.github.database.rider.springboot.model.user;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")

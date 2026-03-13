@@ -32,9 +32,10 @@ public class FlywayIt {
 
     @BeforeAll
     public static void initDB(){
-        flyway = new Flyway();
-        flyway.setDataSource("jdbc:hsqldb:mem:flyway;DB_CLOSE_DELAY=-1", "sa", "");
-        flyway.setLocations("filesystem:src/test/resources/migration");
+        flyway = Flyway.configure()
+                .dataSource("jdbc:hsqldb:mem:flyway;DB_CLOSE_DELAY=-1", "sa", "")
+                .locations("filesystem:src/test/resources/migration")
+                .load();
         flyway.migrate();
 
     }
@@ -42,7 +43,7 @@ public class FlywayIt {
     @Test
     @DataSet(value = "users.yml",executorId = "flyway")
     public void shouldListUsers() throws SQLException {
-        try (Statement stmt = flyway.getDataSource().getConnection().createStatement()) {
+        try (Statement stmt = flyway.getConfiguration().getDataSource().getConnection().createStatement()) {
             ResultSet resultSet = stmt.executeQuery("select * from user u order by id");
             assertThat(resultSet.next()).isTrue();
             assertThat(resultSet.getString(2)).isEqualTo("@realpestano");
@@ -53,7 +54,7 @@ public class FlywayIt {
     @DataSet(cleanBefore = true, transactional = true,executorId = "flyway")
     @ExpectedDataSet(value = "usersInserted.yml")
     public void shouldInserUsers() throws SQLException {
-        Connection connection = flyway.getDataSource().getConnection();
+        Connection connection = flyway.getConfiguration().getDataSource().getConnection();
         //connection.setAutoCommit(false); //transactional=true
         java.sql.Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);

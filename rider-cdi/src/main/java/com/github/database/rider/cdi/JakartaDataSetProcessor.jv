@@ -88,8 +88,8 @@ public class DataSetProcessor {
                 return jtaConnectionHolder.get().getConnection(entityManagerBeanName);
             } else {
                 if (isHibernatePresentOnClasspath()) {
-                    connection = entityManager.unwrap(org.hibernate.engine.spi.SessionImplementor.class).getJdbcConnectionAccess().obtainConnection()
-                    ;
+                    connection = entityManager.unwrap(org.hibernate.Session.class)
+                            .doReturningWork(returningConnection -> returningConnection);
                 } else {
                     /**
                      * see here:http://wiki.eclipse.org/EclipseLink/Examples/JPA/EMAPI#Getting_a_JDBC_Connection_from_an_EntityManager

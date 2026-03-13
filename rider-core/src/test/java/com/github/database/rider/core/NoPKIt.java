@@ -36,11 +36,12 @@ public class NoPKIt {
 
     @BeforeClass
     public static void initMigration() throws SQLException {
-        flyway = new Flyway();
-        flyway.setDataSource(DB_URL, "sa", "");
-        flyway.setLocations("filesystem:src/test/resources/migration");
+        flyway = Flyway.configure()
+                .dataSource(DB_URL, "sa", "")
+                .locations("filesystem:src/test/resources/migration")
+                .load();
         flyway.migrate();
-        connection = flyway.getDataSource().getConnection();
+        connection = flyway.getConfiguration().getDataSource().getConnection();
     }
 
     @AfterClass

@@ -1,7 +1,6 @@
 package com.github.database.rider.core.util;
 
 import org.hibernate.Session;
-import org.hibernate.internal.SessionImpl;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -121,9 +120,7 @@ public class EntityManagerProvider implements TestRule {
         Connection connection;
         final EntityTransaction tx = em.getTransaction();
         if (isHibernateOnClasspath() && em.getDelegate() instanceof Session) {
-            connection = em.unwrap(org.hibernate.engine.spi.SessionImplementor.class).getJdbcCoordinator()
-                                                                                      .getLogicalConnection()
-                                                                                      .getPhysicalConnection();
+            connection = em.unwrap(Session.class).doReturningWork(returningConnection -> returningConnection);
         } else {
             /**
              * see here:http://wiki.eclipse.org/EclipseLink/Examples/JPA/EMAPI#Getting_a_JDBC_Connection_from_an_EntityManager

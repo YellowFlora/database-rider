@@ -33,17 +33,18 @@ public class JooqDBUnitTest {
 
     @Rule
     public DBUnitRule dbUnitRule = DBUnitRule.
-            instance(() -> flyway.getDataSource().getConnection());
+            instance(() -> flyway.getConfiguration().getDataSource().getConnection());
 
 
     @BeforeClass
     public static void initMigration() throws SQLException {
-        flyway = new Flyway();
-        flyway.setDataSource(DB_URL, "sa", "");
-        flyway.setLocations("filesystem:src/main/resources/db/migration");
+        flyway = Flyway.configure()
+                .dataSource(DB_URL, "sa", "")
+                .locations("filesystem:src/main/resources/db/migration")
+                .load();
         flyway.migrate();
 
-        connection = flyway.getDataSource().getConnection();
+        connection = flyway.getConfiguration().getDataSource().getConnection();
         //add some data to test db cleanup
         try (Statement stmt = connection.createStatement()) {
             stmt.addBatch("INSERT INTO flyway_test.author(id, first_name, last_name, date_of_birth, year_of_birth, address) VALUES (1, 'Erich', 'Gamma','1903-06-25','1900',null)");

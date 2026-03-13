@@ -7,3 +7,11 @@
 
 A simple SpringBoot (with JPA and Data modules) example application using Database Rider for testing JPA repositories.
 
+This sample now targets Java 17, Spring Boot 3.5.x, Spring Framework 6.x, and Jakarta namespaces.
+
+Build it with the Jakarta profile so the `rider-junit5` Jakarta classifier is produced:
+
+`mvn -Pjakarta -pl rider-examples/spring-boot-dbunit-sample -am test`
+
+The primary Boot 3 regression coverage in this module is `MultipleDataSourcesTest` plus the leak-hunter path.
+*** Delete File: /Users/sagemaasch/Documents/database-rider/rider-examples/rider-kotlin/src/test/resources/datasets/test_data.yaml

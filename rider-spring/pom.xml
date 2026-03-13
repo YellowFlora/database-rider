@@ -8,9 +8,6 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>rider-spring</artifactId>
 
-    <properties>
-        <version.spring>5.3.21</version.spring>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>com.github.database-rider</groupId>
@@ -21,19 +18,19 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>${version.spring}</version>
+            <version>${spring.framework.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>${version.spring}</version>
+            <version>${spring.framework.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${version.spring}</version>
+            <version>${spring.framework.version}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -53,16 +50,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <release>${maven.compiler.release}</release>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -72,7 +66,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <source>8</source>
+                    <source>${maven.compiler.release}</source>
                 </configuration>
             </plugin>
 

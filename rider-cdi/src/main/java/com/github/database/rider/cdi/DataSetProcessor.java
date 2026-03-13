@@ -14,7 +14,6 @@ import com.github.database.rider.core.exporter.DataSetExporter;
 import com.github.database.rider.core.replacers.Replacer;
 import org.dbunit.DatabaseUnitException;
 import org.hibernate.Session;
-import org.hibernate.internal.SessionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,7 +89,7 @@ public class DataSetProcessor {
                 return jtaConnectionHolder.get().getConnection(entityManagerBeanName);
             } else {
                 if (isHibernatePresentOnClasspath() && entityManager.getDelegate() instanceof Session) {
-                    connection = ((SessionImpl) entityManager.unwrap(Session.class)).connection();
+                    connection = entityManager.unwrap(Session.class).doReturningWork(returningConnection -> returningConnection);
                 } else {
                     /**
                      * see here:http://wiki.eclipse.org/EclipseLink/Examples/JPA/EMAPI#Getting_a_JDBC_Connection_from_an_EntityManager
