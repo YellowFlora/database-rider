@@ -25,14 +25,13 @@ File:
 
 Current status:
 
-- disabled during the Boot 3 migration
-- Boot 3 coverage currently relies on the multiple-datasource and leak-hunter paths
+- completed on `codex/database-rider-2-modernization`
+- the sample now uses the same `cacheConnection = false` Boot 3 pattern as the working multi-datasource test path
 
-Next work:
+Follow-up:
 
-- identify whether the failure is caused by test context setup, transaction semantics, or dataset lifecycle ordering
-- restore one straightforward `@SpringBootTest` regression path that proves Rider works end-to-end on Boot 3
-- keep the test representative of the documented usage, not just an internal workaround
+- keep the test green as the Spring tranche continues
+- use it as the baseline regression path for future Spring Boot 3 changes
 
 ### 2. Revisit Data JPA rollback coverage
 
