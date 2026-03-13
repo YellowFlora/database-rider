@@ -3,6 +3,8 @@ package com.github.database.rider.springboot.model.user;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -10,7 +12,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotNull
     private String email;
@@ -32,11 +34,11 @@ public class User {
     }
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -62,13 +64,12 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
-
-        return id == user.id;
+        return Objects.equals(id, user.id);
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return Objects.hashCode(id);
     }
 }

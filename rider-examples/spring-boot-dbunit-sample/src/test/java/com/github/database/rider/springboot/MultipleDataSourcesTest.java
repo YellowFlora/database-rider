@@ -73,10 +73,12 @@ public class MultipleDataSourcesTest {
     }
 
     @Test
-    @DataSet(cleanBefore = true)//as we didn't declared a dataset DBUnit wont clear the table
+    @DataSet("users.yml")
     @ExpectedDataSet("user.yml")
     public void shouldInsertUser() {
         assertThat(userRepository).isNotNull();
+        assertThat(userRepository.count()).isEqualTo(3);
+        userRepository.deleteAll();
         assertThat(userRepository.count()).isEqualTo(0);
         userRepository.save(new User("newUser@gmail.com", "new user"));
         //assertThat(userRepository.count()).isEqualTo(1); //assertion is made by @ExpectedDataset

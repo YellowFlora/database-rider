@@ -41,12 +41,13 @@ File:
 
 Current status:
 
-- still disabled with a known `@DataJpaTest` and `@ExpectedDataSet` limitation
+- completed on `codex/database-rider-2-modernization`
+- the sample now verifies rollback semantics directly in a Boot 3 `@DataJpaTest` slice using an `@AfterTransaction` RiderDSL assertion
 
-Next work:
+Follow-up:
 
-- determine whether this is a framework limitation, a Rider lifecycle bug, or outdated test design
-- either make it pass under Boot 3 or explicitly document it as unsupported in 2.0
+- if desired later, add a separate committed-transaction slice example for `@ExpectedDataSet`
+- keep rollback coverage focused on the transactional behavior that `@DataJpaTest` actually guarantees
 
 ## Stage B: Modernize the deferred example modules
 
