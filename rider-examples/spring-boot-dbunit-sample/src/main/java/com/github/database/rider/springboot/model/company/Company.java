@@ -1,7 +1,9 @@
 package com.github.database.rider.springboot.model.company;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "company")
@@ -10,7 +12,7 @@ public class Company {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @NotNull
     private String name;
@@ -27,11 +29,11 @@ public class Company {
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long value) {
+    public void setId(Long value) {
         this.id = value;
     }
 
@@ -49,13 +51,12 @@ public class Company {
         if (o == null || getClass() != o.getClass()) return false;
 
         Company user = (Company) o;
-
-        return id == user.id;
+        return Objects.equals(id, user.id);
 
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
+        return Objects.hashCode(id);
     }
 }

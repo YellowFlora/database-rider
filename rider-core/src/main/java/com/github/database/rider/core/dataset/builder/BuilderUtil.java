@@ -5,12 +5,11 @@ import com.github.database.rider.core.configuration.DBUnitConfig;
 import org.dbunit.dataset.Column;
 import org.dbunit.dataset.datatype.DataType;
 import org.eclipse.persistence.internal.jpa.metamodel.AttributeImpl;
-import org.hibernate.SessionFactory;
-import org.hibernate.persister.entity.AbstractEntityPersister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.persistence.metamodel.Attribute;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -44,8 +43,7 @@ public class BuilderUtil {
             if (isEclipseLinkOnClasspath()) {
                 columnName = ((AttributeImpl) column).getMapping().getField().getName();
             } else if (isHibernateOnClasspath() && isEntityManagerActive()) {
-                AbstractEntityPersister entityMetadata = (AbstractEntityPersister) em().getEntityManagerFactory().unwrap(SessionFactory.class).getClassMetadata(column.getJavaMember().getDeclaringClass());
-                columnName = entityMetadata.getPropertyColumnNames(column.getName())[0];
+                columnName = getHibernateColumnName(column);
             }
         } catch (Exception e) {
             LOGGER.error("Could not extract database column name from column {} and type {}", column.getName(), column.getDeclaringType().getJavaType().getName(), e);
@@ -62,6 +60,27 @@ public class BuilderUtil {
 
     public static boolean isEclipseLinkOnClasspath() {
         return isOnClasspath("org.eclipse.persistence.mappings.DirectToFieldMapping");
+    }
+
+    private static String getHibernateColumnName(Attribute column) throws Exception {
+        Object sessionFactory = em().getEntityManagerFactory().unwrap(Class.forName("org.hibernate.SessionFactory"));
+        Object entityMetadata;
+
+        try {
+            Method getClassMetadata = sessionFactory.getClass().getMethod("getClassMetadata", Class.class);
+            entityMetadata = getClassMetadata.invoke(sessionFactory, column.getJavaMember().getDeclaringClass());
+        } catch (NoSuchMethodException ignored) {
+            Object runtimeMetamodels = sessionFactory.getClass().getMethod("getRuntimeMetamodels").invoke(sessionFactory);
+            Object mappingMetamodel = runtimeMetamodels.getClass().getMethod("getMappingMetamodel").invoke(runtimeMetamodels);
+            entityMetadata = mappingMetamodel.getClass()
+                    .getMethod("getEntityDescriptor", Class.class)
+                    .invoke(mappingMetamodel, column.getJavaMember().getDeclaringClass());
+        }
+
+        String[] columnNames = (String[]) entityMetadata.getClass()
+                .getMethod("getPropertyColumnNames", String.class)
+                .invoke(entityMetadata, column.getName());
+        return columnNames[0];
     }
 
     /**

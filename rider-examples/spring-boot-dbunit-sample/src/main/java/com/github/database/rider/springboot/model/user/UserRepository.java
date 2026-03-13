@@ -1,8 +1,7 @@
 package com.github.database.rider.springboot.model.user;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface UserRepository extends CrudRepository<User, Long> {

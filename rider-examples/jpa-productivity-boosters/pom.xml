@@ -224,4 +224,13 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>jakarta</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>

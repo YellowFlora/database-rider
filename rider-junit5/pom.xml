@@ -9,8 +9,6 @@
     <artifactId>rider-junit5</artifactId>
 
     <properties>
-        <version.junit-platform>1.7.2</version.junit-platform>
-        <version.junit-jupiter>5.7.2</version.junit-jupiter>
         <src.dir>src/main/java</src.dir>
         <test.dir>src/test/java</test.dir>
     </properties>
@@ -24,7 +22,7 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>${version.junit-jupiter}</version>
+            <version>${junit.jupiter.version}</version>
             <!-- for writing tests "test" scope would suffice,
                 but extensions are defined in the project's "main" folder, so we need "compile" -->
             <scope>compile</scope>
@@ -34,7 +32,7 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-commons</artifactId>
-            <version>${version.junit-platform}</version>
+            <version>${junit.platform.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -43,20 +41,20 @@
             <!-- contains the engine that actually runs the Jupiter-tests -->
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${version.junit-jupiter}</version>
+            <version>${junit.jupiter.version}</version>
         </dependency>
         <dependency>
             <!-- contains the engine that actually runs the Jupiter-tests -->
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>${version.junit-jupiter}</version>
+            <version>${junit.jupiter.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <!-- contains the runner that adapts Jupiter-tests for a v4-run -->
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
-            <version>${version.junit-platform}</version>
+            <version>${junit.platform.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -67,25 +65,25 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.3.11.Final</version>
+            <version>${hibernate.javax.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
-            <version>2.2.0.RELEASE</version>
+            <version>${spring.boot.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>5.3.21</version>
+            <version>${spring.framework.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.3.21</version>
+            <version>${spring.framework.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -103,13 +101,13 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.3.11.Final</version>
+            <version>${hibernate.javax.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>3.2.1</version>
+            <version>${flyway.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -131,13 +129,13 @@
                 <dependency>
                     <groupId>org.hibernate</groupId>
                     <artifactId>hibernate-core</artifactId>
-                    <version>6.2.3.Final</version>
+                    <version>${hibernate.jakarta.version}</version>
                     <scope>provided</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.eclipse.persistence</groupId>
                     <artifactId>eclipselink</artifactId>
-                    <version>4.0.1</version>
+                    <version>${eclipselink.jakarta.version}</version>
                     <scope>provided</scope>
                 </dependency>
             </dependencies>

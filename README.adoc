@@ -38,6 +38,18 @@ Watch https://www.youtube.com/watch?v=A5ryED3a8FY[1.0 promo video^] to get an id
 
 A lot of this work is based on https://github.com/arquillian/arquillian-extension-persistence/[Arquillian persistence extension] and focus on simplicity (one dependency - dbunit).
 
+== 2.0 Migration Status
+
+The current modernization branch targets Java 17 as the baseline for CI and the actively maintained examples.
+
+For Spring Boot 3 / Spring Framework 6 / Jakarta users:
+
+- build the Spring and Kotlin sample tranche with `-Pjakarta`
+- use the `jakarta` classifier for `rider-core` and `rider-junit5`
+- expect Jakarta namespace imports such as `jakarta.persistence.*`
+
+The remaining Quarkus, Micronaut, and older example migrations are follow-up stages in the 2.0 release train.
+
 
 == Introduction
 

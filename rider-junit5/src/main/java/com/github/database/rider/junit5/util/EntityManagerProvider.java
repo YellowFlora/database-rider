@@ -2,7 +2,6 @@ package com.github.database.rider.junit5.util;
 
 import com.github.database.rider.core.util.PropertyResolutionUtil;
 import org.hibernate.Session;
-import org.hibernate.internal.SessionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,7 +118,7 @@ public class EntityManagerProvider {
         Connection connection;
         final EntityTransaction tx = em.getTransaction();
         if (isHibernateOnClasspath() && em.getDelegate() instanceof Session) {
-            connection = ((SessionImpl) em.unwrap(Session.class)).connection();
+            connection = em.unwrap(Session.class).doReturningWork(returningConnection -> returningConnection);
         } else {
             /**
              * see here:http://wiki.eclipse.org/EclipseLink/Examples/JPA/EMAPI#Getting_a_JDBC_Connection_from_an_EntityManager

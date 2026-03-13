@@ -11,24 +11,12 @@
     <artifactId>rider-examples</artifactId>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>jpa-productivity-boosters</module>
-        <module>jOOQ-DBUnit-flyway-example</module>
-        <module>dbunit-tomee-appcomposer-sample</module>
-	    <module>spring-boot-dbunit-sample</module>
-        <module>quarkus-dbunit-sample</module>
-        <module>quarkus-postgres-sample</module>
-        <module>rider-micronaut</module>
-        <module>rider-kotlin</module>
-    </modules>
-
     <name>Database Rider examples</name>
 
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -38,18 +26,43 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <source>8</source>
+                    <source>${maven.compiler.release}</source>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.7</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>legacy-examples</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>jpa-productivity-boosters</module>
+                <module>jOOQ-DBUnit-flyway-example</module>
+                <module>dbunit-tomee-appcomposer-sample</module>
+                <module>spring-boot-dbunit-sample</module>
+                <module>quarkus-dbunit-sample</module>
+                <module>quarkus-postgres-sample</module>
+                <module>rider-micronaut</module>
+                <module>rider-kotlin</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>jakarta</id>
+            <modules>
+                <module>spring-boot-dbunit-sample</module>
+                <module>rider-kotlin</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
